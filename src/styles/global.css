@@ -1392,6 +1392,36 @@ a {
     width: 100%;
     justify-content: space-between;
   }
+  /* Footer theme colors */
+
+.footer-light {
+  background: #17583e;
+  color: #f5f1e8;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+.footer-dark {
+  background: #d97732;
+  color: #ffffff;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* Footer links */
+.footer-light a,
+.footer-light button {
+  color: #f5f1e8;
+}
+
+.footer-dark a,
+.footer-dark button {
+  color: #ffffff;
+}
+
+/* Footer hover */
+.footer-light a:hover,
+.footer-dark a:hover {
+  opacity: 0.7;
+}
 }
 
 

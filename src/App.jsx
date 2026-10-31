@@ -38,66 +38,56 @@ const states = [
   { name: "Mizoram", count: 28, districts: 11, image: "https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=900&q=85" },
 ];
 
-
 const territories = [
   {
     name: "Jammu and Kashmir",
     count: 57,
     districts: 8,
-    image:
-      "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=900&q=85",
+    image: "https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=900&q=85",
   },
   {
     name: "Delhi (NCT)",
     count: 38,
     districts: 7,
-    image:
-      "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=900&q=85",
+    image: "https://images.unsplash.com/photo-1564507592333-c60657eea523?auto=format&fit=crop&w=900&q=85",
   },
   {
     name: "Dadra and Nagar Haveli and Daman and Diu",
     count: 31,
     districts: 4,
-    image:
-      "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=900&q=85",
+    image: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?auto=format&fit=crop&w=900&q=85",
   },
   {
     name: "Ladakh",
     count: 20,
     districts: 2,
-    image:
-      "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=900&q=85",
+    image: "https://images.unsplash.com/photo-1581793745862-99fde7fa73d2?auto=format&fit=crop&w=900&q=85",
   },
   {
     name: "Andaman and Nicobar Islands",
     count: 16,
     districts: 5,
-    image:
-      "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=85",
+    image: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=900&q=85",
   },
   {
     name: "Puducherry",
     count: 13,
     districts: 6,
-    image:
-      "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=900&q=85",
+    image: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?auto=format&fit=crop&w=900&q=85",
   },
   {
     name: "Chandigarh",
     count: 11,
     districts: 3,
-    image:
-      "https://images.unsplash.com/photo-1514222134-b57cbb8ce073?auto=format&fit=crop&w=900&q=85",
+    image: "https://images.unsplash.com/photo-1514222134-b57cbb8ce073?auto=format&fit=crop&w=900&q=85",
   },
   {
     name: "Lakshadweep",
     count: 11,
     districts: 3,
-    image:
-      "https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=900&q=85",
+    image: "https://images.unsplash.com/photo-1593693397690-362cb9666fc2?auto=format&fit=crop&w=900&q=85",
   },
 ];
-
 
 const categories = [
   "Nature & Wildlife",
@@ -179,7 +169,7 @@ function IntroLoader({ onComplete }) {
   );
 }
 
-function Navbar({ dark, setDark }) {
+function Navbar({ isDarkMode, setDark }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [locationIndex, setLocationIndex] = useState(0);
@@ -224,7 +214,6 @@ function Navbar({ dark, setDark }) {
         <span className="brand-icon">
           <MapPin size={22} />
         </span>
-
         <span>unmapia</span>
       </a>
 
@@ -233,9 +222,7 @@ function Navbar({ dark, setDark }) {
           EXPLORE <span>2526</span>
         </button>
 
-        <button onClick={() => goTo("categories")}>
-          PLAN A TRIP
-        </button>
+        <button onClick={() => goTo("categories")}>PLAN A TRIP</button>
 
         <span className="location-label">
           <span className="live-dot" />
@@ -248,10 +235,10 @@ function Navbar({ dark, setDark }) {
 
         <button
           className="icon-button"
-          onClick={() => setDark(!dark)}
+          onClick={() => setDark(!isDarkMode)}
           aria-label="Toggle theme"
         >
-          {dark ? <Sun size={17} /> : <Moon size={17} />}
+          {isDarkMode ? <Sun size={17} /> : <Moon size={17} />}
         </button>
       </nav>
 
@@ -276,15 +263,13 @@ function Navbar({ dark, setDark }) {
               Explore destinations
             </button>
 
-            <button onClick={() => goTo("featured")}>
-              Today's pick
-            </button>
+            <button onClick={() => goTo("featured")}>Today's pick</button>
 
             <button onClick={() => goTo("categories")}>
               Browse categories
             </button>
 
-            <button onClick={() => setDark(!dark)}>
+            <button onClick={() => setDark(!isDarkMode)}>
               Toggle theme
             </button>
           </motion.div>
@@ -360,20 +345,17 @@ function CategoryMarquee() {
   const items = [...categories, ...categories];
 
   return (
-    <section
-      className="marquee-section"
-      aria-label="Explore place categories"
-    >
+    <section className="marquee-section" aria-label="Explore place categories">
       <div className="marquee-track">
         {items.map((item, i) => (
           <button
             key={`${item}-${i}`}
             className="marquee-item"
-            onClick={() => {
+            onClick={() =>
               document.getElementById("categories")?.scrollIntoView({
                 behavior: "smooth",
-              });
-            }}
+              })
+            }
           >
             {item} <span>✳</span>
           </button>
@@ -404,7 +386,6 @@ function FeaturedDestination() {
             alt="Green landscape in Kerala, India"
             loading="lazy"
           />
-
           <span className="image-tag">KERALA, INDIA</span>
         </motion.div>
 
@@ -432,9 +413,7 @@ function FeaturedDestination() {
 
           <button
             className="green-button"
-            onClick={() =>
-              alert("Destination story can be added here.")
-            }
+            onClick={() => alert("Destination story can be added here.")}
           >
             Read the story <ArrowUpRight size={17} />
           </button>
@@ -466,7 +445,6 @@ function StateCard({ place, index, onSelect }) {
         <span className="card-meta">
           {place.count} PLACES · {place.districts} DISTRICTS
         </span>
-
         <h3>{place.name}</h3>
       </div>
     </motion.button>
@@ -576,7 +554,6 @@ function StateGrid() {
   );
 }
 
-
 function UnionTerritories() {
   return (
     <section
@@ -613,11 +590,9 @@ function UnionTerritories() {
             />
 
             <span className="territory-overlay" />
-
             <span className="territory-number">
               {String(i + 1).padStart(2, "0")}
             </span>
-
             <span className="territory-arrow">
               <ArrowUpRight size={20} />
             </span>
@@ -655,17 +630,13 @@ function CategoryFilters() {
         {categories.map((category, i) => (
           <button
             key={category}
-            className={`category-pill ${
-              active === category ? "active" : ""
-            }`}
+            className={`category-pill ${active === category ? "active" : ""}`}
             onClick={() =>
               setActive(active === category ? "" : category)
             }
           >
             {category}{" "}
-            <span>
-              {[84, 112, 76, 42, 68, 53, 91, 37, 49][i]}
-            </span>
+            <span>{[84, 112, 76, 42, 68, 53, 91, 37, 49][i]}</span>
           </button>
         ))}
       </div>
@@ -690,10 +661,10 @@ function CategoryFilters() {
 // Main App
 export default function App() {
   const [loading, setLoading] = useState(true);
-  const [dark, setDark] = useState(false);
+  const [isDarkMode, setDark] = useState(false);
 
   return (
-    <div className={dark ? "app dark-theme" : "app"}>
+    <div className={isDarkMode ? "app dark-theme" : "app"}>
       <AnimatePresence>
         {loading && (
           <IntroLoader
@@ -703,7 +674,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <Navbar dark={dark} setDark={setDark} />
+      <Navbar isDarkMode={isDarkMode} setDark={setDark} />
 
       <main>
         {/* Existing homepage sections - kept unchanged */}
@@ -715,12 +686,12 @@ export default function App() {
         <CategoryFilters />
 
         {/* Newly added lower homepage sections */}
-        <BrowseByDistrict />
+        <BrowseByDistrict isDarkMode={isDarkMode} />
         <AnimatedStats />
       </main>
 
       {/* Premium footer */}
-      <FooterSection dark={dark} setDark={setDark} />
+      <FooterSection dark={isDarkMode} setDark={setDark} />
     </div>
   );
 }

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 
-// તમારા સ્ક્રીનશોટ મુજબના બધા જ પ્લેસ અને તેમના ફોટા
 const districts = [
   { name: "Kolkata", lat: "22.57° N", lng: "88.36° E", places: 38, img: "https://images.unsplash.com/photo-1558431382-27e303142255?q=80&w=800&auto=format&fit=crop" },
   { name: "North Goa", lat: "15.60° N", lng: "74.00° E", places: 36, img: "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?q=80&w=800&auto=format&fit=crop" },
@@ -18,43 +17,62 @@ const districts = [
   { name: "Jaipur", lat: "26.92° N", lng: "75.82° E", places: 23, img: "https://images.unsplash.com/photo-1477587458883-47145ed94245?q=80&w=800&auto=format&fit=crop" },
 ];
 
-export default function BrowseByDistrict() {
+// isDarkMode ને પ્રોપ્સ તરીકે લઈએ છીએ
+export default function BrowseByDistrict({ isDarkMode }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
-  // માઉસની પોઝિશન ટ્રેક કરવા માટે
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // સ્મૂથ એનિમેશન માટે સ્પ્રિંગ ઇફેક્ટ
   const springConfig = { damping: 25, stiffness: 200, mass: 0.5 };
   const smoothX = useSpring(mouseX, springConfig);
   const smoothY = useSpring(mouseY, springConfig);
 
-  // જ્યારે માઉસ મૂવ થાય ત્યારે પોઝિશન અપડેટ કરવી
   const handleMouseMove = (e) => {
-    // ફોટો માઉસની જમણી બાજુ અને થોડો ઉપર દેખાય તે માટે ઓફસેટ (Offset)
     mouseX.set(e.clientX + 40); 
     mouseY.set(e.clientY - 200); 
+  };
+
+  // થીમ મુજબના કલર્સ
+  const colors = {
+    bg: isDarkMode ? "#111111" : "#f5f1e8", // ડાર્કમાં કાળું
+    text: isDarkMode ? "#f5f1e8" : "#241d18", // ડાર્કમાં સફેદ
+    muted: isDarkMode ? "#888888" : "#777067", // નાના લખાણ માટે
+    border: isDarkMode ? "#333333" : "#dcd6ca", // લાઈન માટે
+    hover: isDarkMode ? "#d37450" : "#1a3b2b", // હોવર કરતાં નારંગી કે લીલો
   };
 
   return (
     <section 
       onMouseMove={handleMouseMove}
-      style={{ padding: "80px 5vw", backgroundColor: "#f5f1e8", position: "relative", overflow: "hidden" }}
+      style={{ 
+        padding: "80px 5vw", 
+        backgroundColor: colors.bg, 
+        position: "relative", 
+        overflow: "hidden",
+        transition: "background-color 0.4s ease"
+      }}
     >
       <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
         
-        {/* ટોપ હેડિંગ */}
-        <p style={{ fontFamily: "monospace", fontSize: "12px", letterSpacing: "2px", color: "#777067", marginBottom: "40px", textTransform: "uppercase" }}>
+        <p style={{ fontFamily: "monospace", fontSize: "12px", letterSpacing: "2px", color: colors.muted, marginBottom: "40px", textTransform: "uppercase" }}>
           03 — Browse by District
         </p>
         
-        {/* મુખ્ય ટાઇટલ (Playfair Display ફોન્ટ જેવો દેખાવ) */}
-        <h2 style={{ fontFamily: "Georgia, 'Times New Roman', serif", fontSize: "clamp(40px, 5vw, 75px)", lineHeight: 1.1, color: "#241d18", fontWeight: 500, letterSpacing: "-1.5px", marginBottom: "60px", maxWidth: "900px" }}>
+        <h2 style={{ 
+          fontFamily: "Georgia, 'Times New Roman', serif", 
+          fontSize: "clamp(40px, 5vw, 75px)", 
+          lineHeight: 1.1, 
+          color: colors.text, 
+          fontWeight: 500, 
+          letterSpacing: "-1.5px", 
+          marginBottom: "60px", 
+          maxWidth: "900px",
+          transition: "color 0.4s ease"
+        }}>
           Start from a district, end up <br /> somewhere unmapped.
         </h2>
 
-        {/* ડિસ્ટ્રિક્ટની લિસ્ટ */}
         <div style={{ position: "relative" }}>
           {districts.map((district, index) => (
             <div
@@ -64,19 +82,19 @@ export default function BrowseByDistrict() {
               style={{
                 display: "flex",
                 justifyContent: "space-between",
-                alignItems: "baseline", // લખાણ નીચેની લાઈન સાથે એલાઇન થાય
+                alignItems: "baseline",
                 padding: "35px 0",
-                borderBottom: "1px solid #dcd6ca", // સ્ક્રીનશોટ મુજબની પાતળી લાઈન
+                borderBottom: `1px solid ${colors.border}`, // બોર્ડર કલર ડાયનેમિક
                 cursor: "pointer",
                 position: "relative",
                 zIndex: 2,
+                transition: "border-color 0.4s ease"
               }}
             >
-              {/* ડિસ્ટ્રિક્ટનું નામ */}
               <h3 style={{ 
                 fontFamily: "Georgia, 'Times New Roman', serif", 
                 fontSize: "clamp(40px, 5vw, 70px)", 
-                color: hoveredIndex === index ? "#1a3b2b" : "#241d18", 
+                color: hoveredIndex === index ? colors.hover : colors.text, // હોવર કલર ડાયનેમિક
                 margin: 0, 
                 transition: "color 0.3s ease", 
                 fontWeight: 500,
@@ -85,16 +103,23 @@ export default function BrowseByDistrict() {
                 {district.name}
               </h3>
               
-              {/* જમણી બાજુની વિગતો (Lat, Long, Places) */}
-              <div style={{ display: "flex", alignItems: "center", gap: "40px", fontFamily: "monospace", fontSize: "13px", color: "#777067", letterSpacing: "1px" }}>
+              <div style={{ 
+                display: "flex", 
+                alignItems: "center", 
+                gap: "40px", 
+                fontFamily: "monospace", 
+                fontSize: "13px", 
+                color: colors.muted, 
+                letterSpacing: "1px",
+                transition: "color 0.4s ease"
+              }}>
                 <span>{district.lat} {district.lng}</span>
                 <span>{district.places} PLACES</span>
-                <ArrowUpRight size={20} color="#241d18" strokeWidth={1.5} />
+                <ArrowUpRight size={20} color={colors.text} strokeWidth={1.5} />
               </div>
             </div>
           ))}
 
-          {/* માઉસની સાથે ફરતો ફોટો */}
           <AnimatePresence>
             {hoveredIndex !== null && (
               <motion.div
@@ -106,16 +131,16 @@ export default function BrowseByDistrict() {
                   position: "fixed",
                   top: 0,
                   left: 0,
-                  x: smoothX, // માઉસની X પોઝિશન
-                  y: smoothY, // માઉસની Y પોઝિશન
+                  x: smoothX,
+                  y: smoothY,
                   width: "320px",
                   height: "420px",
                   borderRadius: "12px",
                   overflow: "hidden",
                   boxShadow: "0 30px 60px rgba(0,0,0,0.25)",
-                  zIndex: 999, // બધાની ઉપર દેખાય
-                  pointerEvents: "none", // જેથી માઉસ હોવરમાં બ્લોક ના થાય
-                  backgroundColor: "#fff", // બેકગ્રાઉન્ડ સ્પષ્ટ રહે
+                  zIndex: 999,
+                  pointerEvents: "none",
+                  backgroundColor: colors.bg, // ડાર્ક મોડમાં પણ ઇમેજની પાછળ કાળું જ દેખાય
                 }}
               >
                 <img
