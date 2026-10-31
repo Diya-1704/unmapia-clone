@@ -1,0 +1,50 @@
+import { motion } from 'framer-motion';
+import { ArrowUpRight } from 'lucide-react';
+import { unionTerritories } from '../data/destinations';
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 24 },
+  visible: (i) => ({
+    opacity: 1, y: 0,
+    transition: { duration: 0.5, delay: i * 0.06, ease: [0.22, 1, 0.36, 1] },
+  }),
+};
+
+export default function UnionTerritories() {
+  return (
+    <section className="ut-section" id="union-territories">
+      <header className="ut-header">
+        <span className="ut-eyebrow">Union Territories</span>
+        <span className="ut-count">{unionTerritories.length}</span>
+      </header>
+      <div className="ut-divider" />
+      <div className="ut-grid">
+        {unionTerritories.map((ut, i) => (
+          <motion.a
+            key={ut.id}
+            href={`#${ut.id}`}
+            className="ut-card"
+            custom={i}
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-60px' }}
+          >
+            <img src={ut.image} alt={ut.name} loading="lazy" />
+            <div className="ut-card__overlay" />
+            <div className="ut-card__content">
+              <span className="ut-card__title">{ut.name}</span>
+              <span className="ut-card__meta">
+                <span>{ut.places} places</span>
+                <span>{ut.districts} districts</span>
+              </span>
+            </div>
+            <span className="ut-card__arrow" aria-hidden="true">
+              <ArrowUpRight size={18} strokeWidth={1.75} />
+            </span>
+          </motion.a>
+        ))}
+      </div>
+    </section>
+  );
+}

@@ -1,0 +1,1398 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap');
+
+/* =========================================
+   01. GLOBAL VARIABLES
+========================================= */
+
+:root {
+  font-family: 'DM Sans', sans-serif;
+  color: #29251f;
+  background: #f5f1e8;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+
+  --paper: #f5f1e8;
+  --ink: #29251f;
+  --green: #17583e;
+  --muted: #77766b;
+  --line: #d9d4c8;
+
+  --serif: 'Playfair Display', Georgia, serif;
+  --mono: 'DM Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 95px;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+}
+
+body,
+button,
+input {
+  font-family: 'DM Sans', sans-serif;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  color: inherit;
+  cursor: pointer;
+  border: 0;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid #43876a;
+  outline-offset: 4px;
+}
+
+button:disabled {
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* =========================================
+   02. APP & THEME
+========================================= */
+
+.app {
+  overflow: clip;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  transition: background .3s, color .3s;
+}
+
+.dark-theme {
+  --paper: #202820;
+  --ink: #f3eee2;
+  --line: #424b40;
+  --muted: #c1bcae;
+  --green: #568b69;
+}
+
+/* =========================================
+   03. INTRO LOADER
+========================================= */
+
+.intro-loader {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: var(--green);
+  background: #f5f1e8;
+}
+
+.topo-lines {
+  position: absolute;
+  width: min(80vw, 800px);
+  height: min(80vw, 800px);
+  top: -10%;
+  right: -10%;
+  color: #9cac8c;
+  opacity: .7;
+}
+
+.intro-brand {
+  position: relative;
+  text-align: center;
+}
+
+.intro-brand h1 {
+  margin: 12px 0 8px;
+  font: 500 clamp(42px, 6vw, 72px)/1 var(--serif);
+  color: #29251f;
+}
+
+.intro-brand p {
+  color: #6b6a5f;
+}
+
+.intro-brand p,
+.eyebrow,
+.section-meta,
+.hero-coordinates,
+.hero-index,
+.hero-scroll,
+.card-meta,
+.image-tag {
+  font: 10px var(--mono);
+  letter-spacing: 1.3px;
+}
+
+/* =========================================
+   04. NAVBAR
+========================================= */
+
+.navbar {
+  position: absolute;
+  z-index: 50;
+  top: 18px;
+  left: 4%;
+  right: 4%;
+  min-height: 66px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+
+  padding: 12px 23px;
+  border: 1px solid transparent;
+  border-radius: 22px;
+
+  color: white;
+
+  transition:
+    background .35s,
+    color .35s,
+    box-shadow .35s,
+    border-color .35s;
+}
+
+.navbar-scrolled {
+  position: fixed;
+  top: 12px;
+
+  color: #29251f;
+  background: rgba(248, 245, 237, .94);
+
+  backdrop-filter: blur(18px);
+
+  border-color: rgba(65, 59, 45, .12);
+  box-shadow: 0 8px 32px rgba(32, 28, 20, .08);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  font: 600 26px var(--serif);
+  white-space: nowrap;
+}
+
+.brand-icon {
+  display: flex;
+  color: #76c08a;
+}
+
+.desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 30px);
+}
+
+.desktop-nav button,
+.menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  padding: 8px 0;
+  background: transparent;
+
+  font: 10px var(--mono);
+  letter-spacing: .8px;
+  white-space: nowrap;
+
+  transition: opacity .25s;
+}
+
+.desktop-nav button:hover,
+.menu-toggle:hover {
+  opacity: .65;
+}
+
+.desktop-nav button span {
+  padding: 4px 6px;
+  border-radius: 10px;
+  background: rgba(130, 180, 140, .22);
+}
+
+.location-label {
+  font: 9px var(--mono);
+  letter-spacing: .8px;
+  white-space: nowrap;
+}
+
+.live-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 6px;
+  border-radius: 50%;
+  background: #82bd80;
+}
+
+.icon-button {
+  padding: 8px !important;
+}
+
+.menu-toggle {
+  gap: 8px;
+}
+
+.mobile-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+
+  display: grid;
+  gap: 4px;
+
+  padding: 15px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+
+  background: var(--paper);
+  color: var(--ink);
+
+  box-shadow: 0 12px 30px #00000012;
+}
+
+.mobile-menu button {
+  padding: 14px;
+  text-align: left;
+  background: transparent;
+  border-radius: 10px;
+}
+
+.mobile-menu button:hover {
+  background: #8b9d7c20;
+}
+
+/* =========================================
+   05. HERO SECTION
+========================================= */
+
+.hero {
+  min-height: 790px;
+  height: min(900px, 100svh);
+
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  background-color: #29251f;
+  background-position: center;
+  background-size: cover;
+
+  color: #fff;
+}
+
+/* Refresh-based hero image, NOT slideshow */
+
+.hero-background-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  pointer-events: none;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(13, 26, 18, .77),
+      rgba(13, 26, 18, .24) 75%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(13, 26, 18, .35),
+      transparent 60%
+    );
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+
+  width: min(760px, 86%);
+  margin: 70px 0 0 9%;
+}
+
+.eyebrow {
+  display: block;
+}
+
+.light {
+  color: rgba(255, 255, 255, .8);
+}
+
+.hero-coordinates {
+  display: block;
+  margin: 42px 0 15px;
+  color: rgba(255, 255, 255, .75);
+}
+
+.hero h1 {
+  margin: 0;
+
+  font: 400 clamp(58px, 8.3vw, 120px)/.98 var(--serif);
+  letter-spacing: -3.5px;
+}
+
+.hero h1 em {
+  font-weight: 400;
+}
+
+.hero-description {
+  max-width: 425px;
+  margin: 28px 0;
+
+  font-size: 14px;
+  line-height: 1.9;
+
+  color: rgba(255, 255, 255, .86);
+}
+
+.hero-button,
+.green-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+
+  padding: 15px 19px;
+  border-radius: 30px;
+
+  background: #17583e;
+  color: white;
+
+  font: 10px var(--mono);
+  letter-spacing: .5px;
+
+  transition: transform .3s, background .3s;
+}
+
+.hero-button {
+  background: #f5f1e8;
+  color: #29251f;
+}
+
+.hero-button:hover,
+.green-button:hover {
+  transform: translateY(-3px);
+  background: #2a7652;
+  color: white;
+}
+
+.hero-index,
+.hero-scroll {
+  position: absolute;
+  z-index: 2;
+  bottom: 30px;
+
+  color: rgba(255, 255, 255, .78);
+}
+
+.hero-index {
+  left: 5%;
+}
+
+.hero-scroll {
+  right: 5%;
+}
+
+/* =========================================
+   06. CATEGORY MARQUEE
+========================================= */
+
+.marquee-section {
+  overflow: hidden;
+
+  padding: 22px 0;
+
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 48s linear infinite;
+}
+
+.marquee-section:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-item {
+  padding: 0 20px;
+
+  color: var(--ink);
+  background: transparent;
+
+  white-space: nowrap;
+
+  font: italic 27px var(--serif);
+}
+
+.marquee-item span {
+  margin-left: 18px;
+  color: #b26c4b;
+  font-size: 18px;
+}
+
+/* =========================================
+   07. COMMON SECTIONS
+========================================= */
+
+.section-wrap {
+  padding: 100px 7%;
+}
+
+.section-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+
+  padding-bottom: 17px;
+  border-bottom: 1px solid var(--line);
+
+  color: var(--muted);
+}
+
+/* =========================================
+   08. FEATURED DESTINATION
+========================================= */
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 8%;
+
+  align-items: center;
+  padding-top: 45px;
+}
+
+.featured-image {
+  height: 500px;
+  position: relative;
+  overflow: hidden;
+
+  border-radius: 5px;
+  background: #d9dfd0;
+}
+
+.featured-image img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+  object-fit: cover;
+
+  transition: transform .8s;
+}
+
+.image-hover:hover img {
+  transform: scale(1.04);
+}
+
+.image-tag {
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+
+  padding: 10px 12px;
+
+  color: white;
+
+  border: 1px solid #ffffff75;
+  border-radius: 20px;
+
+  background: #00000024;
+}
+
+.outline-tag {
+  display: inline-block;
+
+  padding: 9px 12px;
+
+  border: 1px solid #aeb9a8;
+  border-radius: 20px;
+
+  font: 9px var(--mono);
+  letter-spacing: 1px;
+}
+
+.featured-copy h2 {
+  margin: 26px 0 5px;
+
+  font: 400 clamp(45px, 5.5vw, 78px)/1.05 var(--serif);
+  letter-spacing: -2px;
+}
+
+.featured-copy h2 span,
+.section-heading-row h2 span {
+  color: #b97553;
+}
+
+.featured-subtitle {
+  font: italic 19px var(--serif);
+  color: var(--muted);
+}
+
+.featured-location {
+  margin: 30px 0;
+
+  font: 10px var(--mono);
+  letter-spacing: 1.1px;
+}
+
+.featured-description {
+  max-width: 390px;
+  margin: 0 0 27px;
+
+  color: var(--muted);
+
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+/* =========================================
+   09. BROWSE BY STATE
+========================================= */
+
+.states-section {
+  padding-top: 50px;
+}
+
+.section-heading-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 30px;
+
+  padding: 35px 0;
+}
+
+.section-heading-row h2,
+.categories-section h2 {
+  margin: 0;
+
+  font: 400 clamp(42px, 6vw, 78px)/1.07 var(--serif);
+  letter-spacing: -2px;
+}
+
+.section-heading-row > p {
+  color: var(--muted);
+  font: italic 16px/1.8 var(--serif);
+}
+
+.state-tools {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+
+  margin: 10px 0 25px;
+}
+
+.state-tools > span {
+  font: 9px var(--mono);
+  letter-spacing: 1px;
+  color: var(--muted);
+}
+
+.state-tools input {
+  width: min(240px, 50%);
+
+  padding: 11px 15px;
+
+  border: 1px solid var(--line);
+  border-radius: 25px;
+
+  color: var(--ink);
+  background: transparent;
+
+  font-size: 12px;
+}
+
+.state-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 15px;
+}
+
+.state-card {
+  position: relative;
+  min-height: 310px;
+
+  overflow: hidden;
+  border-radius: 5px;
+
+  background: #536d53;
+  text-align: left;
+  color: white;
+
+  isolation: isolate;
+}
+
+.state-card::before {
+  content: "";
+
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+
+  background-image: var(--card-image);
+  background-size: cover;
+  background-position: center;
+
+  transition: transform .65s;
+}
+
+.state-card::after {
+  content: "";
+
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+
+  background: linear-gradient(
+    0deg,
+    #101810c9,
+    #10181005 75%
+  );
+
+  transition: background .3s;
+}
+
+.state-card:hover::before {
+  transform: scale(1.07);
+}
+
+.state-card:hover::after {
+  background: linear-gradient(
+    0deg,
+    #101810e6,
+    #10181025 85%
+  );
+}
+
+.card-arrow {
+  position: absolute;
+  top: 17px;
+  right: 17px;
+
+  transition: transform .3s;
+}
+
+.state-card:hover .card-arrow {
+  transform: translate(3px, -3px);
+}
+
+.card-content {
+  position: absolute;
+  left: 22px;
+  right: 20px;
+  bottom: 22px;
+}
+
+.card-meta {
+  display: block;
+
+  font-size: 8px;
+  letter-spacing: 1px;
+
+  color: #ffffffcf;
+}
+
+.card-content h3 {
+  margin: 12px 0 0;
+
+  font: 400 clamp(25px, 3vw, 37px)/1.1 var(--serif);
+}
+
+/* =========================================
+   10. DESTINATION MODAL
+========================================= */
+
+.modal-backdrop {
+  position: fixed;
+  z-index: 200;
+  inset: 0;
+
+  display: grid;
+  place-items: center;
+
+  padding: 20px;
+
+  background: #111711a8;
+  backdrop-filter: blur(5px);
+}
+
+.destination-modal {
+  position: relative;
+  width: min(480px, 100%);
+
+  padding: 45px;
+
+  border-radius: 15px;
+
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.destination-modal h2 {
+  margin: 18px 0;
+  font: 400 48px var(--serif);
+}
+
+.destination-modal p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.modal-close {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+}
+
+/* =========================================
+   11. UNION TERRITORIES
+   Original button size preserved
+========================================= */
+
+.territories-section {
+  padding-top: 25px;
+}
+
+/* Four-column layout */
+
+.territory-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 12px;
+  padding-top: 28px;
+}
+
+/* Original button dimensions */
+
+.territory-card {
+  position: relative;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 170px;
+
+  display: block;
+
+  padding: 0;
+  overflow: hidden;
+
+  border: 1px solid var(--line);
+  border-radius: 5px;
+
+  text-align: left;
+
+  background: #343d35;
+  color: white;
+
+  isolation: isolate;
+  cursor: pointer;
+
+  transition:
+    background .3s,
+    color .3s,
+    transform .3s;
+}
+
+/* Image fits the original card size */
+
+.territory-image {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  transition: transform .65s ease;
+}
+
+.territory-card:hover .territory-image {
+  transform: scale(1.06);
+}
+
+/* Dark overlay */
+
+.territory-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+
+  display: block;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, .15) 0%,
+    rgba(0, 0, 0, .12) 35%,
+    rgba(0, 0, 0, .76) 100%
+  );
+
+  pointer-events: none;
+}
+
+/* Top number */
+
+.territory-number {
+  position: absolute;
+  top: 15px;
+  left: 16px;
+  z-index: 2;
+
+  color: rgba(255, 255, 255, .9);
+
+  font: 10px var(--mono);
+  letter-spacing: 1px;
+}
+
+/* Arrow */
+
+.territory-arrow {
+  position: absolute;
+  top: 12px;
+  right: 13px;
+  z-index: 2;
+
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+
+  border: 1px solid rgba(255, 255, 255, .75);
+  border-radius: 50%;
+
+  transition: transform .3s ease;
+}
+
+.territory-card:hover .territory-arrow {
+  transform: translate(3px, -3px);
+}
+
+/* Text content */
+
+.territory-content {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 15px;
+  z-index: 2;
+
+  display: block;
+  color: white;
+}
+
+.territory-content h3 {
+  margin: 0 0 12px;
+
+  color: white;
+
+  font: 400 20px/1.2 var(--serif);
+}
+
+/* Places and districts */
+
+.territory-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+
+  padding-top: 9px;
+
+  border-top: 1px solid rgba(255, 255, 255, .55);
+
+  color: rgba(255, 255, 255, .92);
+
+  font: 8px var(--mono);
+  letter-spacing: .5px;
+}
+
+/* =========================================
+   12. CATEGORY FILTERS
+========================================= */
+
+.categories-section {
+  padding-top: 35px;
+  padding-bottom: 115px;
+}
+
+.categories-section h2 {
+  margin: 35px 0;
+}
+
+.categories-section h2 em {
+  font-weight: 400;
+}
+
+.category-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.category-pill {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  padding: 14px 17px;
+
+  border: 1px solid var(--line);
+  border-radius: 30px;
+
+  background: transparent;
+  color: var(--ink);
+
+  font-size: 12px;
+
+  transition:
+    color .25s,
+    background .25s,
+    border-color .25s;
+}
+
+.category-pill span {
+  color: var(--muted);
+  font: 9px var(--mono);
+}
+
+.category-pill:hover,
+.category-pill.active {
+  background: var(--green);
+  border-color: var(--green);
+  color: white;
+}
+
+.category-pill.active span,
+.category-pill:hover span {
+  color: #d5e4d6;
+}
+
+.filter-message {
+  margin-top: 25px;
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.filter-message button {
+  margin-left: 12px;
+
+  text-decoration: underline;
+
+  background: transparent;
+  color: var(--ink);
+}
+
+/* =========================================
+   13. FOOTER
+========================================= */
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+
+  padding: 35px 7%;
+
+  border-top: 1px solid var(--line);
+}
+
+.footer-brand {
+  font-size: 25px;
+}
+
+.footer p {
+  color: var(--muted);
+  font: italic 13px var(--serif);
+}
+
+.footer > span,
+.footer > button {
+  font: 9px var(--mono);
+  letter-spacing: .7px;
+  color: var(--muted);
+}
+
+.footer > button {
+  padding: 10px;
+  background: transparent;
+}
+
+/* =========================================
+   14. TABLET RESPONSIVE
+========================================= */
+
+@media (max-width: 1024px) {
+  .featured-grid {
+    gap: 5%;
+  }
+
+  .territory-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .state-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* =========================================
+   15. MOBILE RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+  .section-wrap {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+  .navbar {
+    left: 3%;
+    right: 3%;
+    padding: 12px 15px;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  .featured-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .featured-image {
+    height: 360px;
+  }
+
+  .section-heading-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .state-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .territory-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .footer {
+    flex-wrap: wrap;
+  }
+
+  .ut-unused {
+    display: none;
+  }
+}
+
+/* =========================================
+   16. SMALL MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+  .hero {
+    min-height: 680px;
+    height: 90svh;
+  }
+
+  .hero-content {
+    width: 88%;
+    margin-left: 6%;
+  }
+
+  .hero h1 {
+    font-size: clamp(52px, 12vw, 72px);
+    letter-spacing: -2px;
+  }
+
+  .hero-description {
+    font-size: 13px;
+  }
+
+  .hero-index,
+  .hero-scroll {
+    bottom: 20px;
+    font-size: 8px;
+  }
+
+  .section-wrap {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+
+  .featured-image {
+    height: 300px;
+  }
+
+  .section-meta {
+    font-size: 8px;
+  }
+
+  .state-tools {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .state-tools input {
+    width: 100%;
+  }
+
+  .territory-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .territory-card {
+    min-height: 170px;
+  }
+
+  .category-pills {
+    gap: 8px;
+  }
+
+  .category-pill {
+    padding: 11px 13px;
+    font-size: 11px;
+  }
+
+  .destination-modal {
+    padding: 35px 25px;
+  }
+
+  .destination-modal h2 {
+    font-size: 38px;
+  }
+
+  .footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+}
+
+/* =========================================
+   17. ACCESSIBILITY
+========================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  
+/* =========================================
+   BROWSE BY DISTRICT - SERIF FONT
+========================================= */
+
+.browse-district h2,
+.browse-district h3,
+.browse-district p,
+.browse-district .section-heading,
+.browse-district .section-subtitle {
+  font-family: 'Playfair Display', Georgia, serif !important;
+}
+
+/* Counter numbers and labels */
+
+.browse-district .counter,
+.browse-district .counter-number,
+.browse-district .counter-tag,
+.browse-district .stat-number,
+.browse-district .stat-label {
+  font-family: 'Playfair Display', Georgia, serif !important;
+}
+
+/* =========================================
+   FOOTER - LEFT BRAND SECTION
+========================================= */
+
+.footer .footer-brand,
+.footer .footer-brand h2,
+.footer .footer-brand p,
+.footer .footer-left,
+.footer .footer-left h2,
+.footer .footer-left p {
+  font-family: 'Playfair Display', Georgia, serif !important;
+}
+
+/* BROWSE BY DISTRICT - FIX */
+
+.browse-district {
+  display: block !important;
+  width: 100%;
+  padding: 80px 5vw;
+  background: #f5f1e8;
+  color: #29251f;
+}
+
+.browse-district-inner {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.district-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
+  gap: 45px;
+  align-items: start;
+}
+
+.district-list {
+  display: flex !important;
+  flex-direction: column;
+  width: 100%;
+}
+
+.district-row {
+  display: flex !important;
+  width: 100%;
+  min-height: 95px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 22px 0;
+  border-bottom: 1px solid #dcdcdc;
+  background: transparent !important;
+  cursor: pointer;
+}
+
+.district-row h3 {
+  display: block !important;
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(24px, 3vw, 40px);
+  font-weight: 400;
+  color: #111;
+}
+
+.district-row.active h3,
+.district-row:hover h3 {
+  color: #1a3b2b;
+}
+
+.district-details {
+  display: flex !important;
+  align-items: center;
+  gap: 15px;
+  font: 10px var(--mono);
+  color: #555;
+  white-space: nowrap;
+}
+
+.district-preview {
+  display: block !important;
+  position: sticky;
+  top: 110px;
+  width: 100%;
+  height: 560px;
+  overflow: hidden;
+  background: #e4e0d6;
+}
+
+.district-preview-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.district-preview-image img {
+  display: block !important;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 900px) {
+  .district-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .district-preview {
+    position: relative;
+    top: auto;
+    height: 400px;
+  }
+}
+
+@media (max-width: 600px) {
+  .district-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+  .district-details {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+
+
